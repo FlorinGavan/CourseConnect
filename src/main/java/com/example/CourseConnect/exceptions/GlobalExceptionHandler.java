@@ -1,0 +1,47 @@
+package com.example.CourseConnect.exceptions;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.Map;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
+@Slf4j
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    private final ObjectMapper objectMapper;
+
+    public GlobalExceptionHandler(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    @ExceptionHandler(DeveloperCreateException.class)
+    public ResponseEntity<String> developerCreateException(DeveloperCreateException developerCreateException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", developerCreateException.getMessage())), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CourseCreateException.class)
+    public ResponseEntity<String> courseCreateException(CourseCreateException courseCreateException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", courseCreateException.getMessage())), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TeacherCreateException.class)
+    public ResponseEntity<String> teacherCreateException(TeacherCreateException teacherCreateException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", teacherCreateException.getMessage())), BAD_REQUEST);
+    }
+
+    private String objectToString(Object response) {
+        try {
+            return objectMapper.writeValueAsString(response);
+        } catch (JsonProcessingException e) {
+            log.error("Error processing response to string");
+        }
+        return "Internal error";
+    }
+}
