@@ -37,16 +37,16 @@ public class CourseServiceImpl implements CourseService {
         if (courseDTO.getName() != null) {
             existingCourse.setName(courseDTO.getName());
         }
-        if (courseDTO.getDepartment()!= null){
+        if (courseDTO.getDepartment() != null) {
             existingCourse.setDepartment(courseDTO.getDepartment());
         }
-        if (courseDTO.getDescription()!= null){
+        if (courseDTO.getDescription() != null) {
             existingCourse.setDescription(courseDTO.getDescription());
         }
-        if (courseDTO.getLocalDateTime()!=null){
+        if (courseDTO.getLocalDateTime() != null) {
             existingCourse.setLocalDateTime(courseDTO.getLocalDateTime());
         }
-        if (courseDTO.getDayOfWeek()!= null){
+        if (courseDTO.getDayOfWeek() != null) {
             existingCourse.setDayOfWeek(courseDTO.getDayOfWeek());
         }
         Course updateValue = courseRepositories.save(existingCourse);

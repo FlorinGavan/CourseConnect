@@ -15,7 +15,7 @@ import java.util.List;
 public class TeacherServiceImpl implements TeacherService {
 
     private final TeacherRepositories teacherRepositories;
-    private final  TeacherValidatorService teacherValidatorService;
+    private final TeacherValidatorService teacherValidatorService;
     private final ObjectMapper objectMapper;
 
     public TeacherServiceImpl(TeacherRepositories teacherRepositories, TeacherValidatorService teacherValidatorService, ObjectMapper objectMapper) {

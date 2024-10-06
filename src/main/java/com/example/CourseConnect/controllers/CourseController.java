@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/course")
 public class CourseController {
 
-    private  final CourseService courseService;
+    private final CourseService courseService;
 
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
     @PostMapping
-    public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO){
+    public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO) {
         return ResponseEntity.ok(courseService.createCourse(courseDTO));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO){
+    public ResponseEntity<String> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO) {
         CourseDTO updateCourse = courseService.updateCourse(id, courseDTO);
-        return  ResponseEntity.ok("Course edited");
+        return ResponseEntity.ok("Course edited");
     }
 }

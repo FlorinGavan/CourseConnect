@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class StudentValidatorServiceImpl implements StudentValidatorService{
+public class StudentValidatorServiceImpl implements StudentValidatorService {
 
     private final StudentRepositories studentRepositories;
 
@@ -18,10 +18,10 @@ public class StudentValidatorServiceImpl implements StudentValidatorService{
     }
 
     @Override
-    public void  validateStudentDTO(StudentDTO studentDTO){
+    public void validateStudentDTO(StudentDTO studentDTO) {
         Optional<Student> student = studentRepositories.findStudentByEmail(studentDTO.getEmail());
 
-             if (studentDTO.getFirstName().isEmpty()) {
+        if (studentDTO.getFirstName().isEmpty()) {
             throw new StudentCreateException("First name is required");
         }
         if (studentDTO.getLastName().isEmpty()) {
