@@ -1,5 +1,8 @@
 package com.example.CourseConnect.models.dtos;
 
+import lombok.Data;
+
+@Data
 public class TeacherDTO {
 
     private Long id;

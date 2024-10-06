@@ -21,9 +21,9 @@ public class GlobalExceptionHandler {
         this.objectMapper = objectMapper;
     }
 
-    @ExceptionHandler(DeveloperCreateException.class)
-    public ResponseEntity<String> developerCreateException(DeveloperCreateException developerCreateException) {
-        return new ResponseEntity<>(objectToString(Map.of("message", developerCreateException.getMessage())), BAD_REQUEST);
+    @ExceptionHandler(StudentCreateException.class)
+    public ResponseEntity<String> studentCreateException(StudentCreateException studentCreateException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", studentCreateException.getMessage())), BAD_REQUEST);
     }
 
     @ExceptionHandler(CourseCreateException.class)
