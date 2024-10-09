@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/course")
+@RequestMapping("/api/courses")
 public class CourseController {
 
     private final CourseService courseService;
@@ -22,31 +22,41 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO) {
-        CourseDTO createCourse = courseService.createCourse(courseDTO, courseDTO.getTeacherId());
-        return ResponseEntity.ok(createCourse);
+        return ResponseEntity.ok(courseService.createCourse(courseDTO, courseDTO.getTeacherId()));
     }
 
     @GetMapping
     public ResponseEntity<List<CourseDTO>> getAllCourses() {
-        List<CourseDTO> courses = courseService.getAllCourses();
-        return ResponseEntity.ok(courses);
+        return ResponseEntity.ok(courseService.getAllCourses());
     }
 
     @GetMapping("/category/{category}")
     public ResponseEntity<List<CourseDTO>> getCourseByCategory(@PathVariable Category category) {
-        List<CourseDTO> courses = courseService.getCoursesByCategory(category);
-        return ResponseEntity.ok(courses);
+        return ResponseEntity.ok(courseService.getCoursesByCategory(category));
     }
 
     @GetMapping("/{id}/students")
     public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable Long id) {
-        List<StudentDTO> students = courseService.getStudentsByCourseId(id);
-        return ResponseEntity.ok(students);
+        return ResponseEntity.ok(courseService.getStudentsByCourseId(id));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO) {
-        CourseDTO updateCourse = courseService.updateCourse(id, courseDTO);
+        courseService.updateCourse(id, courseDTO);
         return ResponseEntity.ok("Course edited");
     }
+
+    /**
+     * la course nu pot sa intorc @GetMapping getCourseById si sa imi intoarca acel curs si cu o lista de Studenti care sunt inscrisi la acel curs .
+     *
+     * eu nu vad unde aveai getCourseById in controller-ul asta...
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id) {
+        CourseDTO courseDTO = courseService.getCourseById(id);
+        return ResponseEntity.ok(courseDTO);
+    }
+
 }

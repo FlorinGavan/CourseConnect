@@ -1,6 +1,7 @@
 package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.exceptions.TeacherCreateException;
+import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.TeacherDTO;
 import com.example.CourseConnect.models.entities.Teacher;
 import com.example.CourseConnect.repositories.TeacherRepositories;
@@ -54,5 +55,14 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void deleteTeacher(Long id) {
         teacherRepositories.deleteById(id);
+    }
+
+    @Override
+    public List<CourseDTO> getCoursesByTeacherId(Long id) {
+        Teacher teacher = teacherRepositories.findById(id)
+                .orElseThrow(() -> new TeacherCreateException("Teacher not found"));
+        return teacher.getCourses().stream()
+                .map(course -> objectMapper.convertValue(course, CourseDTO.class))
+                .toList();
     }
 }

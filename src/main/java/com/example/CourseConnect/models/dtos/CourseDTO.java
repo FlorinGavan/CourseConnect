@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,4 +23,5 @@ public class CourseDTO {
     private LocalDateTime localDateTime;
     private DayOfWeek dayOfWeek;
     private Long teacherId;
+    private List<StudentDTO> students;
 }
