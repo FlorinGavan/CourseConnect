@@ -1,10 +1,19 @@
 package com.example.CourseConnect.models.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
+@Table(name = "teachers")
 public class Teacher {
 
     @Id
@@ -19,4 +28,9 @@ public class Teacher {
 
     @Column(name = "email", unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Course> courses;
+
+    private Long teacherId;
 }

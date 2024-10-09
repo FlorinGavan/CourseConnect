@@ -1,13 +1,20 @@
 package com.example.CourseConnect.models.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "courses")
 public class Course {
 
     @Id
@@ -17,8 +24,9 @@ public class Course {
     @Column(name = "name", unique = true)
     private String name;
 
-    @Column(name = "department")
-    private String department;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    private Category category;
 
     @Column(name = "description")
     private String description;
@@ -29,6 +37,16 @@ public class Course {
     @Enumerated(EnumType.STRING)
     @Column(name = "day_of_week")
     private DayOfWeek dayOfWeek;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Teacher teacher;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "course_student",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private Set<Student> students = new HashSet<>();
 
     private int capacity;
 }

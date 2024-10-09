@@ -1,8 +1,8 @@
 package com.example.CourseConnect.controllers;
 
 import com.example.CourseConnect.models.dtos.TeacherDTO;
-import com.example.CourseConnect.repositories.TeacherRepositories;
 import com.example.CourseConnect.services.TeacherService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,21 +13,26 @@ import java.util.List;
 public class TeacherController {
 
     private final TeacherService teacherService;
-    private final TeacherRepositories teacherRepositories;
 
-    public TeacherController(TeacherService teacherService, TeacherRepositories teacherRepositories) {
+    public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
-        this.teacherRepositories = teacherRepositories;
     }
 
     @PostMapping
-    public ResponseEntity<TeacherDTO> createTeacher(@RequestBody TeacherDTO teacherDTO) {
+    public ResponseEntity<TeacherDTO> createTeacher(@RequestBody @Valid TeacherDTO teacherDTO) {
         return ResponseEntity.ok(teacherService.createTeacher(teacherDTO));
     }
 
     @GetMapping
-    public ResponseEntity<List<TeacherDTO>> getTeachers() {
-        return ResponseEntity.ok(teacherService.getTeacher());
+    public ResponseEntity<List<TeacherDTO>> getAllTeachers() {
+        List<TeacherDTO> teachers = teacherService.getAllTeachers();
+        return ResponseEntity.ok(teachers);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TeacherDTO> getTeacherById(@PathVariable Long id) {
+        TeacherDTO teacherDTO = teacherService.getTeacherById(id);
+        return ResponseEntity.ok(teacherDTO);
     }
 
     @DeleteMapping("{id}")

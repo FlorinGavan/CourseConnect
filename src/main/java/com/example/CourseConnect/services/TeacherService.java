@@ -10,6 +10,7 @@ public interface TeacherService {
 
     void deleteTeacher(Long id);
 
-    List<TeacherDTO> getTeacher();
+    TeacherDTO getTeacherById(Long id);
 
+    List<TeacherDTO> getAllTeachers();
 }
