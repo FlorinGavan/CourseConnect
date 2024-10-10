@@ -1,22 +1,17 @@
 package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.exceptions.StudentCreateException;
-import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.StudentDTO;
-import com.example.CourseConnect.models.entities.Course;
 import com.example.CourseConnect.models.entities.Student;
 import com.example.CourseConnect.repositories.CourseRepositories;
 import com.example.CourseConnect.repositories.StudentRepositories;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service

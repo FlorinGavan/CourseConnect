@@ -1,12 +1,8 @@
 package com.example.CourseConnect.services;
 
-import com.example.CourseConnect.exceptions.TeacherCreateException;
 import com.example.CourseConnect.models.dtos.CourseDTO;
-import com.example.CourseConnect.models.dtos.StudentDTO;
 import com.example.CourseConnect.models.entities.Category;
 import com.example.CourseConnect.models.entities.Course;
-import com.example.CourseConnect.models.entities.Student;
-import com.example.CourseConnect.models.entities.Teacher;
 import com.example.CourseConnect.repositories.CourseRepositories;
 import com.example.CourseConnect.repositories.StudentRepositories;
 import com.example.CourseConnect.repositories.TeacherRepositories;

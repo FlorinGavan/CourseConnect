@@ -1,7 +1,6 @@
 package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.models.dtos.CourseDTO;
-import com.example.CourseConnect.models.dtos.StudentDTO;
 import com.example.CourseConnect.models.entities.Category;
 
 import java.util.List;

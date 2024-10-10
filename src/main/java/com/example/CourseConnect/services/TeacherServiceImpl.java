@@ -1,12 +1,10 @@
 package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.exceptions.TeacherCreateException;
-import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.TeacherDTO;
 import com.example.CourseConnect.models.entities.Teacher;
 import com.example.CourseConnect.repositories.TeacherRepositories;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

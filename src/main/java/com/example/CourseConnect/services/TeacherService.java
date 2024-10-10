@@ -1,6 +1,5 @@
 package com.example.CourseConnect.services;
 
-import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.TeacherDTO;
 
 import java.util.List;
