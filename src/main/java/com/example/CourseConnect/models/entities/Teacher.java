@@ -28,9 +28,8 @@ public class Teacher {
 
     @Column(name = "email", unique = true)
     private String email;
+//
+//    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<Course> courses;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Course> courses;
-
-    private Long teacherId;
 }

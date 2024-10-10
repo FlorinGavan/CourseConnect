@@ -13,5 +13,4 @@ public interface TeacherRepositories extends JpaRepository<Teacher, Long> {
 
     Optional<Teacher> findTeacherByEmail(String email);
 
-    List<Teacher> findCoursesByTeacherId(@Param("courseId") Long id);
 }

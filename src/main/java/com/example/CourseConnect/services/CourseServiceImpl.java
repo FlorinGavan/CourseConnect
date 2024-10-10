@@ -37,15 +37,10 @@ public class CourseServiceImpl implements CourseService {
     private static final Logger logger = LoggerFactory.getLogger(CourseServiceImpl.class);
 
     @Override
-    public CourseDTO createCourse(CourseDTO courseDTO, Long teacherId) {
-        Teacher teacher = teacherRepositories.findById(teacherId).orElseThrow(() -> {
-            logger.error("Teacher with id {} not found ", teacherId);
-            return new TeacherCreateException("Teacher not found");
-        });
-
+    public CourseDTO createCourse(CourseDTO courseDTO) {
         Course courseEntitySave = objectMapper.convertValue(courseDTO, Course.class);
-        courseEntitySave.setTeacher(teacher);
         Course courseResponseEntity = courseRepositories.save(courseEntitySave);
+
         log.info("Course with id {} was created ", courseResponseEntity.getId());
         return objectMapper.convertValue(courseResponseEntity, CourseDTO.class);
     }
@@ -64,8 +59,8 @@ public class CourseServiceImpl implements CourseService {
         if (courseDTO.getDescription() != null) {
             existingCourse.setDescription(courseDTO.getDescription());
         }
-        if (courseDTO.getLocalDateTime() != null) {
-            existingCourse.setLocalDateTime(courseDTO.getLocalDateTime());
+        if (courseDTO.getCourseScheduleTime() != null) {
+            existingCourse.setLocalDateTime(courseDTO.getCourseScheduleTime());
         }
         if (courseDTO.getDayOfWeek() != null) {
             existingCourse.setDayOfWeek(courseDTO.getDayOfWeek());
@@ -89,15 +84,15 @@ public class CourseServiceImpl implements CourseService {
                 .toList();
     }
 
-    @Override
-    public List<StudentDTO> getStudentsByCourseId(Long courseId) {
-        logger.info("Fetching students for course Id: {}", courseId);
-        List<Student> students = studentRepositories.findCoursesByIdOrderByFirstNameAsc(courseId);
-        logger.info("Number of students found: {} ", students.size());
-        return students.stream()
-                .map(student -> objectMapper.convertValue(student, StudentDTO.class))
-                .toList();
-    }
+//    @Override
+//    public List<StudentDTO> getStudentsByCourseId(Long courseId) {
+//        logger.info("Fetching students for course Id: {}", courseId);
+//        List<Student> students = studentRepositories.findCoursesByIdOrderByFirstNameAsc(courseId);
+//        logger.info("Number of students found: {} ", students.size());
+//        return students.stream()
+//                .map(student -> objectMapper.convertValue(student, StudentDTO.class))
+//                .toList();
+//    }
 
     @Override
     public void deleteCourse(Long id) {
@@ -107,14 +102,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseDTO getCourseById(Long id) {
         Course course = courseRepositories.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));//use custom exception here
-        CourseDTO courseDTO = objectMapper.convertValue(course, CourseDTO.class);
-
-        courseDTO.setStudents(
-                course.getStudents().stream()
-                        .map(student -> objectMapper.convertValue(student, StudentDTO.class))
-                        .toList()
-        );
-
-        return courseDTO;
+        return objectMapper.convertValue(course, CourseDTO.class);
     }
 }

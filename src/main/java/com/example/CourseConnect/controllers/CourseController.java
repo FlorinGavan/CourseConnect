@@ -22,7 +22,7 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO) {
-        return ResponseEntity.ok(courseService.createCourse(courseDTO, courseDTO.getTeacherId()));
+        return ResponseEntity.ok(courseService.createCourse(courseDTO));
     }
 
     @GetMapping
@@ -35,24 +35,12 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCoursesByCategory(category));
     }
 
-    @GetMapping("/{id}/students")
-    public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable Long id) {
-        return ResponseEntity.ok(courseService.getStudentsByCourseId(id));
-    }
-
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO) {
         courseService.updateCourse(id, courseDTO);
         return ResponseEntity.ok("Course edited");
     }
 
-    /**
-     * la course nu pot sa intorc @GetMapping getCourseById si sa imi intoarca acel curs si cu o lista de Studenti care sunt inscrisi la acel curs .
-     *
-     * eu nu vad unde aveai getCourseById in controller-ul asta...
-     * @param id
-     * @return
-     */
     @GetMapping("/{id}")
     public ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id) {
         CourseDTO courseDTO = courseService.getCourseById(id);

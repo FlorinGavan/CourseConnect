@@ -32,23 +32,21 @@ public class Course {
     private String description;
 
     //what this property does?
-    @Column(name = "local_date_time")
+    @Column(name = "course_schedule_time")
     private LocalDateTime localDateTime;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "day_of_week")
     private DayOfWeek dayOfWeek;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teacher_id", nullable = false)
-    private Teacher teacher;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "course_student",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private Set<Student> students = new HashSet<>();
-
-    //do we need this?
-    private int capacity;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "teacher_id", nullable = false)
+//    private Teacher teacher;
+//
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "course_student",
+//            joinColumns = @JoinColumn(name = "course_id"),
+//            inverseJoinColumns = @JoinColumn(name = "student_id"))
+//    private Set<Student> students = new HashSet<>();
+//
 }

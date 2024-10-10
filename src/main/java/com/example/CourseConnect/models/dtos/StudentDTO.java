@@ -18,6 +18,6 @@ public class StudentDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private Set<Long> courseIds;
-    private List<CourseDTO> enrolledCourses;
+//    private Set<Long> courseIds;
+//    private List<CourseDTO> enrolledCourses;
 }

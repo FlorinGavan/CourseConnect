@@ -41,33 +41,15 @@ public class StudentServiceImpl implements StudentService {
         Student studentEntitySave = objectMapper.convertValue(studentDTO, Student.class);
         studentValidatorService.validateStudentDTO(studentDTO);
 
-        if (studentDTO.getCourseIds() != null && !studentDTO.getCourseIds().isEmpty()) {
-            HashSet<Course> courses = new HashSet<>(courseRepositories.findAllById(studentDTO.getCourseIds()));
-            studentEntitySave.setCourses(courses);
-        }
         Student studentResponseEntity = studentRepositories.save(studentEntitySave);
         log.info("Student created with id: {}", studentResponseEntity.getId());
         return objectMapper.convertValue(studentResponseEntity, StudentDTO.class);
     }
 
     @Override
-    @Transactional
     public StudentDTO getStudentById(Long id) {
-        Student student = studentRepositories.findById(id).orElseThrow(() -> new StudentCreateException("Student not found"));
-        StudentDTO studentDTO = objectMapper.convertValue(student, StudentDTO.class);
-
-        studentDTO.setEnrolledCourses(
-                student.getCourses().stream()
-                        .map(course -> objectMapper.convertValue(course, CourseDTO.class))
-                        .toList()
-        );
-
-        List<CourseDTO> enrolledCourses = student.getCourses().stream()
-                .map(course -> objectMapper.convertValue(course, CourseDTO.class))
-                .collect(Collectors.toList());
-
-        studentDTO.setEnrolledCourses(enrolledCourses);
-        return studentDTO;
+        Student student = studentRepositories.findById(id).orElseThrow(()-> new StudentCreateException("Student not found"));
+        return objectMapper.convertValue(student, StudentDTO.class);
     }
 
     @Override
@@ -77,18 +59,18 @@ public class StudentServiceImpl implements StudentService {
                 .toList();
     }
 
-    @Override
-    @Transactional
-    public void enrollInCourse(Long studentId, Long courseId) {
-        logger.info("Enrolling student ID {} in course ID {}", studentId, courseId);
-        Student student = studentRepositories.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-        Course course = courseRepositories.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
-        student.getCourses().add(course);
-        studentRepositories.save(student);
-        logger.info("Enrollment successful");
-    }
+//    @Override
+//    @Transactional
+//    public void enrollInCourse(Long studentId, Long courseId) {
+//        logger.info("Enrolling student ID {} in course ID {}", studentId, courseId);
+//        Student student = studentRepositories.findById(studentId)
+//                .orElseThrow(() -> new RuntimeException("Student not found"));
+//        Course course = courseRepositories.findById(courseId)
+//                .orElseThrow(() -> new RuntimeException("Course not found"));
+//        student.getCourses().add(course);
+//        studentRepositories.save(student);
+//        logger.info("Enrollment successful");
+//    }
 
     @Override
     public void deleteStudent(Long id) {

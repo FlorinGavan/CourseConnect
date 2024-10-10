@@ -29,12 +29,6 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    /**
-     * si la student incerc  sa il conectez la mai multe Cursuri si cand incerc sa fac @GetMapping
-     * getStudentById nu merge , si as vrea sa imi intoarca acel student si o lista de cursuri la care este  enroll
-     * @param id
-     * @return
-     */
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long id) {
         return ResponseEntity.ok(studentService.getStudentById(id));
@@ -46,9 +40,9 @@ public class StudentController {
         return ResponseEntity.ok("Student deleted");
     }
 
-    @PostMapping("/{studentId}/enroll/{courseId}")
-    public ResponseEntity<String> enrollInCourse(@PathVariable Long studentId, @PathVariable Long courseId) {
-        studentService.enrollInCourse(studentId, courseId);
-        return ResponseEntity.ok("Student enrolled in course successfully");
-    }
+//    @PostMapping("/{studentId}/enroll/{courseId}")
+//    public ResponseEntity<String> enrollInCourse(@PathVariable Long studentId, @PathVariable Long courseId) {
+//        studentService.enrollInCourse(studentId, courseId);
+//        return ResponseEntity.ok("Student enrolled in course successfully");
+//    }
 }

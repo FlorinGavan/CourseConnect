@@ -20,8 +20,8 @@ public class CourseDTO {
     private String name;
     private Category category;
     private String description;
-    private LocalDateTime localDateTime;
+    private LocalDateTime courseScheduleTime;
     private DayOfWeek dayOfWeek;
-    private Long teacherId;
-    private List<StudentDTO> students;
+//    private Long teacherId;
+//    private List<StudentDTO> students;
 }

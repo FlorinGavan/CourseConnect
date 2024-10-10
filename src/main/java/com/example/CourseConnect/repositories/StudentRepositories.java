@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface StudentRepositories extends JpaRepository<Student, Long> {
 
-    List<Student> findCoursesByIdOrderByFirstNameAsc(Long courseId);
+//    List<Student> findCoursesByIdOrderByFirstNameAsc(Long courseId);
 
     Optional<Student> findStudentByEmail(String email);
 }

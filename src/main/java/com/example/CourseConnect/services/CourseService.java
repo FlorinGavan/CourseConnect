@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CourseService {
 
-    CourseDTO createCourse(CourseDTO courseDTO, Long teacherId);
+    CourseDTO createCourse(CourseDTO courseDTO);
 
     CourseDTO updateCourse(Long id, CourseDTO courseDTO);
 
@@ -16,7 +16,7 @@ public interface CourseService {
 
     List<CourseDTO> getCoursesByCategory(Category category);
 
-    List<StudentDTO> getStudentsByCourseId(Long courseId);
+//    List<StudentDTO> getStudentsByCourseId(Long courseId);
 
     void deleteCourse(Long id);
 

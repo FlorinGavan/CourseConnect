@@ -28,6 +28,6 @@ public class Student {
     @Column(name = "email", unique = true)
     private String email;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Course> courses = new HashSet<>();
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    private Set<Course> courses = new HashSet<>();
 }

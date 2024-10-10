@@ -28,7 +28,6 @@ public class TeacherServiceImpl implements TeacherService {
         this.objectMapper = objectMapper;
     }
 
-    @Transactional
     @Override
     public TeacherDTO createTeacher(TeacherDTO teacherDTO) {
         Teacher teacherEntitySave = objectMapper.convertValue(teacherDTO, Teacher.class);
@@ -57,12 +56,12 @@ public class TeacherServiceImpl implements TeacherService {
         teacherRepositories.deleteById(id);
     }
 
-    @Override
-    public List<CourseDTO> getCoursesByTeacherId(Long id) {
-        Teacher teacher = teacherRepositories.findById(id)
-                .orElseThrow(() -> new TeacherCreateException("Teacher not found"));
-        return teacher.getCourses().stream()
-                .map(course -> objectMapper.convertValue(course, CourseDTO.class))
-                .toList();
-    }
+//    @Override
+//    public List<CourseDTO> getCoursesByTeacherId(Long id) {
+//        Teacher teacher = teacherRepositories.findById(id)
+//                .orElseThrow(() -> new TeacherCreateException("Teacher not found"));
+//        return teacher.getCourses().stream()
+//                .map(course -> objectMapper.convertValue(course, CourseDTO.class))
+//                .toList();
+//    }
 }

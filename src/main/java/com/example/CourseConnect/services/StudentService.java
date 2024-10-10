@@ -11,7 +11,7 @@ public interface StudentService {
 
     List<StudentDTO> getAllStudents();
 
-    void enrollInCourse(Long studentId, Long courseId);
+//    void enrollInCourse(Long studentId, Long courseId);
 
     void deleteStudent(Long id);
 }

@@ -42,13 +42,9 @@ public class TeacherController {
         return ResponseEntity.ok("Teacher deleted");
     }
 
-    /**
-     * teacher sa poata crea cursuri  , pentru asta am reusit sa fac mapare dar cand
-     * vreau sa vad cursurile nu mi le mai arata
-     */
-    @GetMapping("/{id}/courses")
-    public ResponseEntity<List<CourseDTO>> getCoursesByTeacherId(@PathVariable Long id) {
-        List<CourseDTO> courses = teacherService.getCoursesByTeacherId(id);
-        return ResponseEntity.ok(courses);
-    }
+//    @GetMapping("/{id}/courses")
+//    public ResponseEntity<List<CourseDTO>> getCoursesByTeacherId(@PathVariable Long id) {
+//        List<CourseDTO> courses = teacherService.getCoursesByTeacherId(id);
+//        return ResponseEntity.ok(courses);
+//    }
 }

@@ -14,5 +14,5 @@ public interface TeacherService {
     TeacherDTO getTeacherById(Long id);
 
     List<TeacherDTO> getAllTeachers();
-    List<CourseDTO> getCoursesByTeacherId(Long id);
+//    List<CourseDTO> getCoursesByTeacherId(Long id);
 }
