@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/student")
+@RequestMapping("/api/students")
 public class StudentController {
 
 
@@ -29,10 +29,15 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
+    /**
+     * si la student incerc  sa il conectez la mai multe Cursuri si cand incerc sa fac @GetMapping
+     * getStudentById nu merge , si as vrea sa imi intoarca acel student si o lista de cursuri la care este  enroll
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long id) {
-        StudentDTO studentDTO = studentService.getStudentById(id);
-        return ResponseEntity.ok(studentDTO);
+        return ResponseEntity.ok(studentService.getStudentById(id));
     }
 
     @DeleteMapping("/{id}")

@@ -1,5 +1,6 @@
 package com.example.CourseConnect.controllers;
 
+import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.TeacherDTO;
 import com.example.CourseConnect.services.TeacherService;
 import jakarta.validation.Valid;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/teacher")
+@RequestMapping("/api/teachers")
 public class TeacherController {
 
     private final TeacherService teacherService;
@@ -39,5 +40,15 @@ public class TeacherController {
     public ResponseEntity<String> deleteTeacher(@PathVariable Long id) {
         teacherService.deleteTeacher(id);
         return ResponseEntity.ok("Teacher deleted");
+    }
+
+    /**
+     * teacher sa poata crea cursuri  , pentru asta am reusit sa fac mapare dar cand
+     * vreau sa vad cursurile nu mi le mai arata
+     */
+    @GetMapping("/{id}/courses")
+    public ResponseEntity<List<CourseDTO>> getCoursesByTeacherId(@PathVariable Long id) {
+        List<CourseDTO> courses = teacherService.getCoursesByTeacherId(id);
+        return ResponseEntity.ok(courses);
     }
 }

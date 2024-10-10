@@ -56,10 +56,11 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepositories.findById(id).orElseThrow(() -> new StudentCreateException("Student not found"));
         StudentDTO studentDTO = objectMapper.convertValue(student, StudentDTO.class);
 
-        studentDTO.setCourseIds(
+        studentDTO.setEnrolledCourses(
                 student.getCourses().stream()
-                        .map(Course::getId)
-                        .collect(Collectors.toSet()));
+                        .map(course -> objectMapper.convertValue(course, CourseDTO.class))
+                        .toList()
+        );
 
         List<CourseDTO> enrolledCourses = student.getCourses().stream()
                 .map(course -> objectMapper.convertValue(course, CourseDTO.class))

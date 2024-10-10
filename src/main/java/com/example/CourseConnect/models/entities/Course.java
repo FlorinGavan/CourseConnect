@@ -31,6 +31,7 @@ public class Course {
     @Column(name = "description")
     private String description;
 
+    //what this property does?
     @Column(name = "local_date_time")
     private LocalDateTime localDateTime;
 
@@ -42,11 +43,12 @@ public class Course {
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "course_student",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private Set<Student> students = new HashSet<>();
 
+    //do we need this?
     private int capacity;
 }

@@ -103,4 +103,18 @@ public class CourseServiceImpl implements CourseService {
     public void deleteCourse(Long id) {
         courseRepositories.deleteById(id);
     }
+
+    @Override
+    public CourseDTO getCourseById(Long id) {
+        Course course = courseRepositories.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));//use custom exception here
+        CourseDTO courseDTO = objectMapper.convertValue(course, CourseDTO.class);
+
+        courseDTO.setStudents(
+                course.getStudents().stream()
+                        .map(student -> objectMapper.convertValue(student, StudentDTO.class))
+                        .toList()
+        );
+
+        return courseDTO;
+    }
 }
