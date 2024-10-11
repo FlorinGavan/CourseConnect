@@ -13,11 +13,11 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Slf4j
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class ExceptionHandlerAdvice {
 
     private final ObjectMapper objectMapper;
 
-    public GlobalExceptionHandler(ObjectMapper objectMapper) {
+    public ExceptionHandlerAdvice(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 

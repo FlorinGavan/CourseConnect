@@ -1,19 +1,13 @@
 package com.example.CourseConnect.models.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "courses")
 public class Course {
 
@@ -33,11 +27,11 @@ public class Course {
 
     //what this property does?
     @Column(name = "course_schedule_time")
-    private LocalDateTime localDateTime;
+    private LocalDateTime courseScheduleTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "day_of_week")
-    private DayOfWeek dayOfWeek;
+    @Column(name = "course_day")
+    private DayOfWeek courseDay;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "teacher_id", nullable = false)

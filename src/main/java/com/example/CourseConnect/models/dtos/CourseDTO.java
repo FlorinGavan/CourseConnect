@@ -1,18 +1,12 @@
 package com.example.CourseConnect.models.dtos;
 
 import com.example.CourseConnect.models.entities.Category;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class CourseDTO {
 
     private Long id;
@@ -20,7 +14,7 @@ public class CourseDTO {
     private Category category;
     private String description;
     private LocalDateTime courseScheduleTime;
-    private DayOfWeek dayOfWeek;
+    private DayOfWeek courseDay;
 //    private Long teacherId;
 //    private List<StudentDTO> students;
 }

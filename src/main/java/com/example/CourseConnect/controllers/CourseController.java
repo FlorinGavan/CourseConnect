@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @RestController
@@ -29,20 +30,23 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<CourseDTO>> getCourseByCategory(@PathVariable Category category) {
-        return ResponseEntity.ok(courseService.getCoursesByCategory(category));
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id) {
+        CourseDTO courseDTO = courseService.getCourseById(id);
+        return ResponseEntity.ok(courseDTO);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<CourseDTO>> filterCourses(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "category", required = false) Category category,
+            @RequestParam(value = "genre", required = false) DayOfWeek courseDay) {
+        return ResponseEntity.ok(courseService.filterCourses(name, category, courseDay));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO) {
         courseService.updateCourse(id, courseDTO);
         return ResponseEntity.ok("Course edited");
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id) {
-        CourseDTO courseDTO = courseService.getCourseById(id);
-        return ResponseEntity.ok(courseDTO);
     }
 }
