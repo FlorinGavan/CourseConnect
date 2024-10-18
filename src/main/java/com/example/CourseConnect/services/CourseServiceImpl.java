@@ -1,13 +1,12 @@
 package com.example.CourseConnect.services;
 
-import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.RequestCourseDTO;
 import com.example.CourseConnect.models.dtos.ResponseCourseDTO;
 import com.example.CourseConnect.models.entities.Category;
 import com.example.CourseConnect.models.entities.Course;
-import com.example.CourseConnect.repositories.CourseRepositories;
-import com.example.CourseConnect.repositories.StudentRepositories;
-import com.example.CourseConnect.repositories.TeacherRepositories;
+import com.example.CourseConnect.repositories.CourseRepository;
+import com.example.CourseConnect.repositories.StudentRepository;
+import com.example.CourseConnect.repositories.TeacherRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -22,16 +21,16 @@ import java.util.List;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    private final CourseRepositories courseRepositories;
+    private final CourseRepository courseRepository;
     private final ObjectMapper objectMapper;
-    private final TeacherRepositories teacherRepositories;
-    private final StudentRepositories studentRepositories;
+    private final TeacherRepository teacherRepository;
+    private final StudentRepository studentRepository;
 
-    public CourseServiceImpl(CourseRepositories courseRepositories, ObjectMapper objectMapper, TeacherRepositories teacherRepositories, StudentRepositories studentRepositories) {
-        this.courseRepositories = courseRepositories;
+    public CourseServiceImpl(CourseRepository courseRepository, ObjectMapper objectMapper, TeacherRepository teacherRepository, StudentRepository studentRepository) {
+        this.courseRepository = courseRepository;
         this.objectMapper = objectMapper;
-        this.teacherRepositories = teacherRepositories;
-        this.studentRepositories = studentRepositories;
+        this.teacherRepository = teacherRepository;
+        this.studentRepository = studentRepository;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(CourseServiceImpl.class);
@@ -39,7 +38,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public ResponseCourseDTO createCourse(RequestCourseDTO requestCourseDTO) {
         Course courseEntitySave = objectMapper.convertValue(requestCourseDTO, Course.class);
-        Course courseResponseEntity = courseRepositories.save(courseEntitySave);
+        Course courseResponseEntity = courseRepository.save(courseEntitySave);
 
         log.info("Course with id {} was created ", courseResponseEntity.getId());
         return objectMapper.convertValue(courseResponseEntity, ResponseCourseDTO.class);
@@ -47,7 +46,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public ResponseCourseDTO updateCourse(Long id, RequestCourseDTO requestCourseDTO) {
-        Course existingCourse = courseRepositories.findCourseById(id)
+        Course existingCourse = courseRepository.findCourseById(id)
                 .orElseThrow(() -> new RuntimeException());
 
         existingCourse.setName(requestCourseDTO.getName() == null ? existingCourse.getName() : requestCourseDTO.getName());
@@ -57,14 +56,14 @@ public class CourseServiceImpl implements CourseService {
         existingCourse.setCourseDay(requestCourseDTO.getCourseDay() == null ? existingCourse.getCourseDay() : requestCourseDTO.getCourseDay());
         existingCourse.setCourseRoomSize(requestCourseDTO.getCourseRoomSize() == null ? existingCourse.getCourseRoomSize(): requestCourseDTO.getCourseRoomSize());
 
-        Course updateValue = courseRepositories.save(existingCourse);
+        Course updateValue = courseRepository.save(existingCourse);
         log.info("Course with id {} was updated", updateValue.getId());
         return objectMapper.convertValue(updateValue, ResponseCourseDTO.class);
     }
 
     @Override
     public List<ResponseCourseDTO> getAllCourses() {
-        return courseRepositories.findAll().stream()
+        return courseRepository.findAll().stream()
                 .map(course -> objectMapper.convertValue(course, ResponseCourseDTO.class))
                 .toList();
     }
@@ -76,7 +75,7 @@ public class CourseServiceImpl implements CourseService {
                 .and(CourseSpecification.categoryContains(category))
                 .and(CourseSpecification.dayOfWeekContains(courseDay));
 
-        List<Course> courses = courseRepositories.findAll(specification);
+        List<Course> courses = courseRepository.findAll(specification);
         log.info("{} courses found", courses.size());
 
         return courses.stream()
@@ -96,7 +95,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void deleteCourse(Long id) {
-        courseRepositories.deleteById(id);
+        courseRepository.deleteById(id);
     }
 
 }

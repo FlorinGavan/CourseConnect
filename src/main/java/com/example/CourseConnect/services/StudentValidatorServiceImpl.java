@@ -3,7 +3,7 @@ package com.example.CourseConnect.services;
 import com.example.CourseConnect.exceptions.StudentCreateException;
 import com.example.CourseConnect.models.dtos.RequestStudentDTO;
 import com.example.CourseConnect.models.entities.Student;
-import com.example.CourseConnect.repositories.StudentRepositories;
+import com.example.CourseConnect.repositories.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,15 +11,15 @@ import java.util.Optional;
 @Service
 public class StudentValidatorServiceImpl implements StudentValidatorService {
 
-    private final StudentRepositories studentRepositories;
+    private final StudentRepository studentRepository;
 
-    public StudentValidatorServiceImpl(StudentRepositories studentRepositories) {
-        this.studentRepositories = studentRepositories;
+    public StudentValidatorServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
     @Override
     public void validateStudentDTO(RequestStudentDTO requestStudentDTO) {
-        Optional<Student> student = studentRepositories.findStudentByEmail(requestStudentDTO.getEmail());
+        Optional<Student> student = studentRepository.findStudentByEmail(requestStudentDTO.getEmail());
 
         if (requestStudentDTO.getFirstName().isEmpty()) {
             throw new StudentCreateException("First name is required");

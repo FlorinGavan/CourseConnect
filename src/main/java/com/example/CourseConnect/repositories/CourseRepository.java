@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CourseRepositories extends JpaRepository<Course, Long>, JpaSpecificationExecutor<Course> {
+public interface CourseRepository extends JpaRepository<Course, Long>, JpaSpecificationExecutor<Course> {
 
     Optional<Course> findCourseById(@NotNull Long id);
 }

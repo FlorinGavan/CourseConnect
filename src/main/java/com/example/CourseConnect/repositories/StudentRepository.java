@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface StudentRepositories extends JpaRepository<Student, Long> {
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
 //    List<Student> findCoursesByIdOrderByFirstNameAsc(Long courseId);
 

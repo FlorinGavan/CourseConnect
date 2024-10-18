@@ -4,8 +4,8 @@ import com.example.CourseConnect.exceptions.StudentCreateException;
 import com.example.CourseConnect.models.dtos.RequestStudentDTO;
 import com.example.CourseConnect.models.dtos.ResponseStudentDTO;
 import com.example.CourseConnect.models.entities.Student;
-import com.example.CourseConnect.repositories.CourseRepositories;
-import com.example.CourseConnect.repositories.StudentRepositories;
+import com.example.CourseConnect.repositories.CourseRepository;
+import com.example.CourseConnect.repositories.StudentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -18,16 +18,16 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private final StudentRepositories studentRepositories;
-    private final CourseRepositories courseRepositories;
+    private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
     private final StudentValidatorService studentValidatorService;
     private final ObjectMapper objectMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
-    public StudentServiceImpl(StudentRepositories studentRepositories, CourseRepositories courseRepositories, StudentValidatorService studentValidatorService, ObjectMapper objectMapper) {
-        this.studentRepositories = studentRepositories;
-        this.courseRepositories = courseRepositories;
+    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository, StudentValidatorService studentValidatorService, ObjectMapper objectMapper) {
+        this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
         this.studentValidatorService = studentValidatorService;
         this.objectMapper = objectMapper;
     }
@@ -37,20 +37,20 @@ public class StudentServiceImpl implements StudentService {
         Student studentEntitySave = objectMapper.convertValue(requestStudentDTO, Student.class);
         studentValidatorService.validateStudentDTO(requestStudentDTO);
 
-        Student studentResponseEntity = studentRepositories.save(studentEntitySave);
+        Student studentResponseEntity = studentRepository.save(studentEntitySave);
         log.info("Student created with id: {}", studentResponseEntity.getId());
         return objectMapper.convertValue(studentResponseEntity, ResponseStudentDTO.class);
     }
 
     @Override
     public ResponseStudentDTO getStudentById(Long id) {
-        Student student = studentRepositories.findById(id).orElseThrow(()-> new StudentCreateException("Student not found"));
+        Student student = studentRepository.findById(id).orElseThrow(()-> new StudentCreateException("Student not found"));
         return objectMapper.convertValue(student, ResponseStudentDTO.class);
     }
 
     @Override
     public List<ResponseStudentDTO> getAllStudents() {
-        return studentRepositories.findAll().stream()
+        return studentRepository.findAll().stream()
                 .map(student -> objectMapper.convertValue(student, ResponseStudentDTO.class))
                 .toList();
     }
@@ -70,6 +70,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(Long id) {
-        studentRepositories.deleteById(id);
+        studentRepository.deleteById(id);
     }
 }
