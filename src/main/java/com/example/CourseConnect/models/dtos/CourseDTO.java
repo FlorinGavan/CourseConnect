@@ -14,4 +14,5 @@ public class CourseDTO {
     private String description;
     private LocalDateTime courseScheduleTime;
     private DayOfWeek courseDay;
+    private Long teacherId;
 }

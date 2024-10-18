@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,7 +26,7 @@ public class Course {
     @Column(name = "description")
     private String description;
 
-    //what this property does?
+
     @Column(name = "course_schedule_time")
     private LocalDateTime courseScheduleTime;
 
@@ -35,4 +36,11 @@ public class Course {
 
     @Column(name = "course_room_size")
     private Integer courseRoomSize;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<StudentEnrollCourse> studentEnrollCourses;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", unique = true)
+    private Teacher teacher;
 }

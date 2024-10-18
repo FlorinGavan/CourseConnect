@@ -1,6 +1,7 @@
 package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.exceptions.StudentCreateException;
+import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.RequestStudentDTO;
 import com.example.CourseConnect.models.dtos.ResponseStudentDTO;
 import com.example.CourseConnect.models.entities.Student;
@@ -44,7 +45,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public ResponseStudentDTO getStudentById(Long id) {
-        Student student = studentRepository.findById(id).orElseThrow(()-> new StudentCreateException("Student not found"));
+        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentCreateException("Student not found"));
         return objectMapper.convertValue(student, ResponseStudentDTO.class);
     }
 

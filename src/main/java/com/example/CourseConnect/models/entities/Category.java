@@ -11,5 +11,6 @@ public enum Category {
     TECHNOLOGY,
     PHYSICS,
     CHEMISTRY,
+    SURVIVAL,
     BIOLOGY
 }

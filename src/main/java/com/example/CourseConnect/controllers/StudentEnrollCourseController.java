@@ -21,6 +21,6 @@ public class StudentEnrollCourseController {
     @PostMapping
     public ResponseEntity<String> enrollCourse(@RequestBody StudentEnrollCourseDTO studentEnrollCourseDTO) {
         studentEnrollCourseService.enrollCourse(studentEnrollCourseDTO);
-        return ResponseEntity.ok("Student enrolled successful");
+        return ResponseEntity.ok("Student enrolled successfully");
     }
 }

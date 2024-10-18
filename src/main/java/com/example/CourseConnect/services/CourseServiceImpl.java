@@ -1,9 +1,12 @@
 package com.example.CourseConnect.services;
 
+import com.example.CourseConnect.exceptions.CourseCreateException;
+import com.example.CourseConnect.exceptions.TeacherNotFoundException;
 import com.example.CourseConnect.models.dtos.RequestCourseDTO;
 import com.example.CourseConnect.models.dtos.ResponseCourseDTO;
 import com.example.CourseConnect.models.entities.Category;
 import com.example.CourseConnect.models.entities.Course;
+import com.example.CourseConnect.models.entities.Teacher;
 import com.example.CourseConnect.repositories.CourseRepository;
 import com.example.CourseConnect.repositories.StudentRepository;
 import com.example.CourseConnect.repositories.TeacherRepository;
@@ -37,7 +40,14 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public ResponseCourseDTO createCourse(RequestCourseDTO requestCourseDTO) {
+        Teacher teacher = teacherRepository.findById(requestCourseDTO.getTeacherId())
+                .orElseThrow(() -> new TeacherNotFoundException("Teacher not found"));
+
+        if (teacher.getCourse()!=null){
+           throw new CourseCreateException("This teacher is already assigned to a task");
+        }
         Course courseEntitySave = objectMapper.convertValue(requestCourseDTO, Course.class);
+        courseEntitySave.setTeacher(teacher);
         Course courseResponseEntity = courseRepository.save(courseEntitySave);
 
         log.info("Course with id {} was created ", courseResponseEntity.getId());
@@ -54,7 +64,7 @@ public class CourseServiceImpl implements CourseService {
         existingCourse.setDescription(requestCourseDTO.getDescription() == null ? existingCourse.getDescription() : requestCourseDTO.getDescription());
         existingCourse.setCourseScheduleTime(requestCourseDTO.getCourseScheduleTime() == null ? existingCourse.getCourseScheduleTime() : requestCourseDTO.getCourseScheduleTime());
         existingCourse.setCourseDay(requestCourseDTO.getCourseDay() == null ? existingCourse.getCourseDay() : requestCourseDTO.getCourseDay());
-        existingCourse.setCourseRoomSize(requestCourseDTO.getCourseRoomSize() == null ? existingCourse.getCourseRoomSize(): requestCourseDTO.getCourseRoomSize());
+        existingCourse.setCourseRoomSize(requestCourseDTO.getCourseRoomSize() == null ? existingCourse.getCourseRoomSize() : requestCourseDTO.getCourseRoomSize());
 
         Course updateValue = courseRepository.save(existingCourse);
         log.info("Course with id {} was updated", updateValue.getId());

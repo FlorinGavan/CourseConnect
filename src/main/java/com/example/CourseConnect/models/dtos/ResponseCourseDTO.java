@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 public class ResponseCourseDTO {
 
     private Long id;
-     private String name;
+    private String name;
     private Category category;
     private String description;
     private LocalDateTime courseScheduleTime;
     private DayOfWeek courseDay;
+    private Long teacherId;
 }

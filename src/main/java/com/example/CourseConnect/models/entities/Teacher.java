@@ -26,7 +26,7 @@ public class Teacher {
 
     @Column(name = "email", unique = true)
     private String email;
-//
-//    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<Course> courses;
+
+    @OneToOne(mappedBy = "teacher")
+    private Course course;
 }

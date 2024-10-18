@@ -1,6 +1,5 @@
 package com.example.CourseConnect.controllers;
 
-import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.RequestCourseDTO;
 import com.example.CourseConnect.models.dtos.ResponseCourseDTO;
 import com.example.CourseConnect.models.entities.Category;
