@@ -1,7 +1,7 @@
 package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.exceptions.TeacherCreateException;
-import com.example.CourseConnect.models.dtos.TeacherDTO;
+import com.example.CourseConnect.models.dtos.RequestTeacherDTO;
 import com.example.CourseConnect.models.entities.Teacher;
 import com.example.CourseConnect.repositories.TeacherRepositories;
 import org.springframework.stereotype.Service;
@@ -18,25 +18,25 @@ public class TeacherValidatorServiceImpl implements TeacherValidatorService {
     }
 
     @Override
-    public void validateTeacherDTO(TeacherDTO teacherDTO) {
-        Optional<Teacher> teacher = teacherRepositories.findTeacherByEmail(teacherDTO.getEmail());
+    public void validateTeacherDTO(RequestTeacherDTO requestTeacherDTO) {
+        Optional<Teacher> teacher = teacherRepositories.findTeacherByEmail(requestTeacherDTO.getEmail());
 
-        if (teacherDTO.getFirstName().isEmpty()) {
+        if (requestTeacherDTO.getFirstName().isEmpty()) {
             throw new TeacherCreateException("First name is required");
         }
-        if (teacherDTO.getLastName().isEmpty()) {
+        if (requestTeacherDTO.getLastName().isEmpty()) {
             throw new TeacherCreateException("Last name is required");
         }
-        if (teacherDTO.getFirstName().length() < 2) {
+        if (requestTeacherDTO.getFirstName().length() < 2) {
             throw new TeacherCreateException("First name is too short");
         }
-        if (teacherDTO.getLastName().length() < 2) {
+        if (requestTeacherDTO.getLastName().length() < 2) {
             throw new TeacherCreateException("Last name is too short");
         }
-        if (!teacherDTO.getFirstName().matches("[a-zA-Z]+") || !teacherDTO.getLastName().matches("[a-zA-Z]+")) {
+        if (!requestTeacherDTO.getFirstName().matches("[a-zA-Z]+") || !requestTeacherDTO.getLastName().matches("[a-zA-Z]+")) {
             throw new TeacherCreateException("Numbers and Symbols are not allowed");
         }
-        if (teacherDTO.getEmail().isEmpty()) {
+        if (requestTeacherDTO.getEmail().isEmpty()) {
             throw new TeacherCreateException("Please add an email ");
         }
         if (teacher.isPresent()) {

@@ -33,14 +33,6 @@ public class Course {
     @Column(name = "course_day")
     private DayOfWeek courseDay;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "teacher_id", nullable = false)
-//    private Teacher teacher;
-//
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "course_student",
-//            joinColumns = @JoinColumn(name = "course_id"),
-//            inverseJoinColumns = @JoinColumn(name = "student_id"))
-//    private Set<Student> students = new HashSet<>();
-//
+    @Column(name = "course_room_size")
+    private Integer courseRoomSize;
 }

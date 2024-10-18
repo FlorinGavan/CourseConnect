@@ -1,7 +1,8 @@
 package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.exceptions.StudentCreateException;
-import com.example.CourseConnect.models.dtos.StudentDTO;
+import com.example.CourseConnect.models.dtos.RequestStudentDTO;
+import com.example.CourseConnect.models.dtos.ResponseStudentDTO;
 import com.example.CourseConnect.models.entities.Student;
 import com.example.CourseConnect.repositories.CourseRepositories;
 import com.example.CourseConnect.repositories.StudentRepositories;
@@ -32,25 +33,25 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDTO createStudent(StudentDTO studentDTO) {
-        Student studentEntitySave = objectMapper.convertValue(studentDTO, Student.class);
-        studentValidatorService.validateStudentDTO(studentDTO);
+    public ResponseStudentDTO createStudent(RequestStudentDTO requestStudentDTO) {
+        Student studentEntitySave = objectMapper.convertValue(requestStudentDTO, Student.class);
+        studentValidatorService.validateStudentDTO(requestStudentDTO);
 
         Student studentResponseEntity = studentRepositories.save(studentEntitySave);
         log.info("Student created with id: {}", studentResponseEntity.getId());
-        return objectMapper.convertValue(studentResponseEntity, StudentDTO.class);
+        return objectMapper.convertValue(studentResponseEntity, ResponseStudentDTO.class);
     }
 
     @Override
-    public StudentDTO getStudentById(Long id) {
+    public ResponseStudentDTO getStudentById(Long id) {
         Student student = studentRepositories.findById(id).orElseThrow(()-> new StudentCreateException("Student not found"));
-        return objectMapper.convertValue(student, StudentDTO.class);
+        return objectMapper.convertValue(student, ResponseStudentDTO.class);
     }
 
     @Override
-    public List<StudentDTO> getAllStudents() {
+    public List<ResponseStudentDTO> getAllStudents() {
         return studentRepositories.findAll().stream()
-                .map(student -> objectMapper.convertValue(student, StudentDTO.class))
+                .map(student -> objectMapper.convertValue(student, ResponseStudentDTO.class))
                 .toList();
     }
 

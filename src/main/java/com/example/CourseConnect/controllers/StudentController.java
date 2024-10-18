@@ -1,6 +1,7 @@
 package com.example.CourseConnect.controllers;
 
-import com.example.CourseConnect.models.dtos.StudentDTO;
+import com.example.CourseConnect.models.dtos.RequestStudentDTO;
+import com.example.CourseConnect.models.dtos.ResponseStudentDTO;
 import com.example.CourseConnect.services.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +21,17 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {
-        return ResponseEntity.ok(studentService.createStudent(studentDTO));
+    public ResponseEntity<ResponseStudentDTO> createStudent(@Valid @RequestBody RequestStudentDTO requestStudentDTO) {
+        return ResponseEntity.ok(studentService.createStudent(requestStudentDTO));
     }
 
     @GetMapping
-    public ResponseEntity<List<StudentDTO>> getAllStudents() {
+    public ResponseEntity<List<ResponseStudentDTO>> getAllStudents() {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long id) {
+    public ResponseEntity<ResponseStudentDTO> getStudentById(@PathVariable Long id) {
         return ResponseEntity.ok(studentService.getStudentById(id));
     }
 

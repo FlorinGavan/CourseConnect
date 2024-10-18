@@ -7,11 +7,12 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 @Data
-public class CourseDTO {
-    private Long id;
+public class RequestCourseDTO {
+
     private String name;
     private Category category;
     private String description;
     private LocalDateTime courseScheduleTime;
     private DayOfWeek courseDay;
+    private Integer courseRoomSize;
 }

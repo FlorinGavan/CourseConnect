@@ -1,15 +1,16 @@
 package com.example.CourseConnect.services;
 
-import com.example.CourseConnect.models.dtos.StudentDTO;
+import com.example.CourseConnect.models.dtos.RequestStudentDTO;
+import com.example.CourseConnect.models.dtos.ResponseStudentDTO;
 
 import java.util.List;
 
 public interface StudentService {
-    StudentDTO createStudent(StudentDTO studentDTO);
+    ResponseStudentDTO createStudent(RequestStudentDTO requestStudentDTO);
 
-    StudentDTO getStudentById(Long id);
+    ResponseStudentDTO getStudentById(Long id);
 
-    List<StudentDTO> getAllStudents();
+    List<ResponseStudentDTO> getAllStudents();
 
 //    void enrollInCourse(Long studentId, Long courseId);
 

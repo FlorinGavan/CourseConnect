@@ -1,8 +1,8 @@
 package com.example.CourseConnect.services;
 
-import com.example.CourseConnect.models.dtos.TeacherDTO;
+import com.example.CourseConnect.models.dtos.RequestTeacherDTO;
 
 public interface TeacherValidatorService {
 
-    void validateTeacherDTO(TeacherDTO teacherDTO);
+    void validateTeacherDTO(RequestTeacherDTO requestTeacherDTO);
 }

@@ -1,25 +1,22 @@
 package com.example.CourseConnect.services;
 
-import com.example.CourseConnect.models.dtos.CourseDTO;
+import com.example.CourseConnect.models.dtos.RequestCourseDTO;
+import com.example.CourseConnect.models.dtos.ResponseCourseDTO;
 import com.example.CourseConnect.models.entities.Category;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CourseService {
 
-    CourseDTO createCourse(CourseDTO courseDTO);
+    ResponseCourseDTO createCourse(RequestCourseDTO requestCourseDTO);
 
-    CourseDTO updateCourse(Long id, CourseDTO courseDTO);
+    ResponseCourseDTO updateCourse(Long courseId, RequestCourseDTO requestCourseDTO);
 
-    List<CourseDTO> getAllCourses();
+    List<ResponseCourseDTO> getAllCourses();
 
-//    List<StudentDTO> getStudentsByCourseId(Long courseId);
-
-    List<CourseDTO>filterCourses(String name, Category category, DayOfWeek courseDay);
+    List<ResponseCourseDTO>filterCourses(String name, Category category, DayOfWeek courseDay);
 
     void deleteCourse(Long id);
 
-    CourseDTO getCourseById(Long id);
 }

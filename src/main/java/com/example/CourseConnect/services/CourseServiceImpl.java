@@ -1,6 +1,8 @@
 package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.models.dtos.CourseDTO;
+import com.example.CourseConnect.models.dtos.RequestCourseDTO;
+import com.example.CourseConnect.models.dtos.ResponseCourseDTO;
 import com.example.CourseConnect.models.entities.Category;
 import com.example.CourseConnect.models.entities.Course;
 import com.example.CourseConnect.repositories.CourseRepositories;
@@ -14,7 +16,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -36,40 +37,40 @@ public class CourseServiceImpl implements CourseService {
     private static final Logger logger = LoggerFactory.getLogger(CourseServiceImpl.class);
 
     @Override
-    public CourseDTO createCourse(CourseDTO courseDTO) {
-        Course courseEntitySave = objectMapper.convertValue(courseDTO, Course.class);
+    public ResponseCourseDTO createCourse(RequestCourseDTO requestCourseDTO) {
+        Course courseEntitySave = objectMapper.convertValue(requestCourseDTO, Course.class);
         Course courseResponseEntity = courseRepositories.save(courseEntitySave);
 
         log.info("Course with id {} was created ", courseResponseEntity.getId());
-        return objectMapper.convertValue(courseResponseEntity, CourseDTO.class);
+        return objectMapper.convertValue(courseResponseEntity, ResponseCourseDTO.class);
     }
 
     @Override
-    public CourseDTO updateCourse(Long id, CourseDTO courseDTO) {
+    public ResponseCourseDTO updateCourse(Long id, RequestCourseDTO requestCourseDTO) {
         Course existingCourse = courseRepositories.findCourseById(id)
                 .orElseThrow(() -> new RuntimeException());
 
-        existingCourse.setName(courseDTO.getName() == null ? existingCourse.getName() : courseDTO.getName());
-        existingCourse.setCategory(courseDTO.getCategory() == null ? existingCourse.getCategory() : courseDTO.getCategory());
-        existingCourse.setDescription(courseDTO.getDescription() == null ? existingCourse.getDescription() : courseDTO.getDescription());
-        existingCourse.setCourseScheduleTime(courseDTO.getCourseScheduleTime() == null ? existingCourse.getCourseScheduleTime() : courseDTO.getCourseScheduleTime());
-        existingCourse.setCourseDay(courseDTO.getCourseDay() == null ? existingCourse.getCourseDay() : courseDTO.getCourseDay());
-        existingCourse.setName(courseDTO.getName() == null ? existingCourse.getName() : courseDTO.getName());
+        existingCourse.setName(requestCourseDTO.getName() == null ? existingCourse.getName() : requestCourseDTO.getName());
+        existingCourse.setCategory(requestCourseDTO.getCategory() == null ? existingCourse.getCategory() : requestCourseDTO.getCategory());
+        existingCourse.setDescription(requestCourseDTO.getDescription() == null ? existingCourse.getDescription() : requestCourseDTO.getDescription());
+        existingCourse.setCourseScheduleTime(requestCourseDTO.getCourseScheduleTime() == null ? existingCourse.getCourseScheduleTime() : requestCourseDTO.getCourseScheduleTime());
+        existingCourse.setCourseDay(requestCourseDTO.getCourseDay() == null ? existingCourse.getCourseDay() : requestCourseDTO.getCourseDay());
+        existingCourse.setCourseRoomSize(requestCourseDTO.getCourseRoomSize() == null ? existingCourse.getCourseRoomSize(): requestCourseDTO.getCourseRoomSize());
 
         Course updateValue = courseRepositories.save(existingCourse);
         log.info("Course with id {} was updated", updateValue.getId());
-        return objectMapper.convertValue(updateValue, CourseDTO.class);
+        return objectMapper.convertValue(updateValue, ResponseCourseDTO.class);
     }
 
     @Override
-    public List<CourseDTO> getAllCourses() {
+    public List<ResponseCourseDTO> getAllCourses() {
         return courseRepositories.findAll().stream()
-                .map(course -> objectMapper.convertValue(course, CourseDTO.class))
+                .map(course -> objectMapper.convertValue(course, ResponseCourseDTO.class))
                 .toList();
     }
 
     @Override
-    public List<CourseDTO> filterCourses(String name, Category category, DayOfWeek courseDay) {
+    public List<ResponseCourseDTO> filterCourses(String name, Category category, DayOfWeek courseDay) {
         Specification<Course> specification = Specification
                 .where(CourseSpecification.nameContains(name))
                 .and(CourseSpecification.categoryContains(category))
@@ -79,7 +80,7 @@ public class CourseServiceImpl implements CourseService {
         log.info("{} courses found", courses.size());
 
         return courses.stream()
-                .map(course -> objectMapper.convertValue(course, CourseDTO.class))
+                .map(course -> objectMapper.convertValue(course, ResponseCourseDTO.class))
                 .toList();
     }
 
@@ -98,9 +99,4 @@ public class CourseServiceImpl implements CourseService {
         courseRepositories.deleteById(id);
     }
 
-    @Override
-    public CourseDTO getCourseById(Long id) {
-        Course course = courseRepositories.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));//use custom exception here
-        return objectMapper.convertValue(course, CourseDTO.class);
-    }
 }

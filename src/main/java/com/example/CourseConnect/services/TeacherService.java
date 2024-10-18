@@ -1,17 +1,18 @@
 package com.example.CourseConnect.services;
 
-import com.example.CourseConnect.models.dtos.TeacherDTO;
+import com.example.CourseConnect.models.dtos.RequestTeacherDTO;
+import com.example.CourseConnect.models.dtos.ResponseTeacherDTO;
 
 import java.util.List;
 
 public interface TeacherService {
 
-    TeacherDTO createTeacher(TeacherDTO teacherDTO);
+    ResponseTeacherDTO createTeacher(RequestTeacherDTO requestTeacherDTO);
 
     void deleteTeacher(Long id);
 
-    TeacherDTO getTeacherById(Long id);
+    ResponseTeacherDTO getTeacherById(Long id);
 
-    List<TeacherDTO> getAllTeachers();
+    List<ResponseTeacherDTO> getAllTeachers();
 //    List<CourseDTO> getCoursesByTeacherId(Long id);
 }

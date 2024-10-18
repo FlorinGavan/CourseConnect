@@ -1,6 +1,8 @@
 package com.example.CourseConnect.controllers;
 
 import com.example.CourseConnect.models.dtos.CourseDTO;
+import com.example.CourseConnect.models.dtos.RequestCourseDTO;
+import com.example.CourseConnect.models.dtos.ResponseCourseDTO;
 import com.example.CourseConnect.models.entities.Category;
 import com.example.CourseConnect.services.CourseService;
 import jakarta.validation.Valid;
@@ -21,23 +23,18 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO) {
-        return ResponseEntity.ok(courseService.createCourse(courseDTO));
+    public ResponseEntity<ResponseCourseDTO> createCourse(@RequestBody RequestCourseDTO requestCourseDTO) {
+        return ResponseEntity.ok(courseService.createCourse(requestCourseDTO));
     }
 
     @GetMapping
-    public ResponseEntity<List<CourseDTO>> getAllCourses() {
+    public ResponseEntity<List<ResponseCourseDTO>> getAllCourses() {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id) {
-        CourseDTO courseDTO = courseService.getCourseById(id);
-        return ResponseEntity.ok(courseDTO);
-    }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<CourseDTO>> filterCourses(
+    public ResponseEntity<List<ResponseCourseDTO>> filterCourses(
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "category", required = false) Category category,
             @RequestParam(value = "genre", required = false) DayOfWeek courseDay) {
@@ -45,8 +42,8 @@ public class CourseController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO) {
-        courseService.updateCourse(id, courseDTO);
+    public ResponseEntity<String> updateCourse(@PathVariable Long id, @Valid @RequestBody RequestCourseDTO requestCourseDTO) {
+        courseService.updateCourse(id, requestCourseDTO);
         return ResponseEntity.ok("Course edited");
     }
 }
