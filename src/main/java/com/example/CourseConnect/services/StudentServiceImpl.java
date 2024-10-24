@@ -1,7 +1,6 @@
 package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.exceptions.StudentCreateException;
-import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.RequestStudentDTO;
 import com.example.CourseConnect.models.dtos.ResponseStudentDTO;
 import com.example.CourseConnect.models.entities.Student;
@@ -14,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -21,23 +21,23 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
-    private final StudentValidatorService studentValidatorService;
     private final ObjectMapper objectMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
-    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository, StudentValidatorService studentValidatorService, ObjectMapper objectMapper) {
+    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository,  ObjectMapper objectMapper) {
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
-        this.studentValidatorService = studentValidatorService;
         this.objectMapper = objectMapper;
     }
 
     @Override
     public ResponseStudentDTO createStudent(RequestStudentDTO requestStudentDTO) {
+        Optional<Student> validateEmail = studentRepository.findStudentByEmail(requestStudentDTO.getEmail());
         Student studentEntitySave = objectMapper.convertValue(requestStudentDTO, Student.class);
-        studentValidatorService.validateStudentDTO(requestStudentDTO);
-
+        if (validateEmail.isPresent()){
+             throw new StudentCreateException("Email already used. Try again with another email!");
+        }
         Student studentResponseEntity = studentRepository.save(studentEntitySave);
         log.info("Student created with id: {}", studentResponseEntity.getId());
         return objectMapper.convertValue(studentResponseEntity, ResponseStudentDTO.class);

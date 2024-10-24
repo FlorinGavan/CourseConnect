@@ -1,5 +1,7 @@
 package com.example.CourseConnect.controllers;
 
+import com.example.CourseConnect.exceptions.CourseNotFoundException;
+import com.example.CourseConnect.exceptions.UnauthorizedException;
 import com.example.CourseConnect.models.dtos.RequestCourseDTO;
 import com.example.CourseConnect.models.dtos.ResponseCourseDTO;
 import com.example.CourseConnect.models.entities.Category;
@@ -22,7 +24,7 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseCourseDTO> createCourse(@RequestBody RequestCourseDTO requestCourseDTO) {
+    public ResponseEntity<ResponseCourseDTO> createCourse(@RequestBody @Valid RequestCourseDTO requestCourseDTO) {
         return ResponseEntity.ok(courseService.createCourse(requestCourseDTO));
     }
 
@@ -31,12 +33,11 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 
-
     @GetMapping("/filter")
     public ResponseEntity<List<ResponseCourseDTO>> filterCourses(
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "category", required = false) Category category,
-            @RequestParam(value = "genre", required = false) DayOfWeek courseDay) {
+            @RequestParam(value = "courseDay", required = false) DayOfWeek courseDay) {
         return ResponseEntity.ok(courseService.filterCourses(name, category, courseDay));
     }
 
@@ -44,5 +45,11 @@ public class CourseController {
     public ResponseEntity<String> updateCourse(@PathVariable Long id, @Valid @RequestBody RequestCourseDTO requestCourseDTO) {
         courseService.updateCourse(id, requestCourseDTO);
         return ResponseEntity.ok("Course edited");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCourse(@PathVariable Long id, @RequestParam Long teacherId) {
+        courseService.deleteCourse(id, teacherId);
+        return ResponseEntity.ok("Course deleted successfully.");
     }
 }

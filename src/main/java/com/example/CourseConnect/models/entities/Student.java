@@ -27,6 +27,6 @@ public class Student {
     @Column(name = "email", unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<StudentEnrollCourse> studentEnrollCourses;
+//    @ManyToMany (mappedBy = "student", cascade = CascadeType.ALL)
+//    private List<StudentEnrollCourse> studentEnrollCourses;
 }

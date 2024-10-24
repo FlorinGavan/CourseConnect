@@ -15,5 +15,6 @@ public class ResponseCourseDTO {
     private String description;
     private LocalDateTime courseScheduleTime;
     private DayOfWeek courseDay;
+    private Integer courseRoomSize;
     private Long teacherId;
 }

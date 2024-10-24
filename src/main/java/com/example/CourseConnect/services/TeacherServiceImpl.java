@@ -10,27 +10,31 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
     private final TeacherRepository teacherRepository;
-    private final TeacherValidatorService teacherValidatorService;
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public TeacherServiceImpl(TeacherRepository teacherRepository, TeacherValidatorService teacherValidatorService, ObjectMapper objectMapper) {
+    public TeacherServiceImpl(TeacherRepository teacherRepository, ObjectMapper objectMapper) {
         this.teacherRepository = teacherRepository;
-        this.teacherValidatorService = teacherValidatorService;
         this.objectMapper = objectMapper;
     }
 
     @Override
     public ResponseTeacherDTO createTeacher(RequestTeacherDTO requestTeacherDTO) {
+        Optional<Teacher> validateEmail = teacherRepository.findTeacherByEmail(requestTeacherDTO.getEmail());
+
         Teacher teacherEntitySave = objectMapper.convertValue(requestTeacherDTO, Teacher.class);
-        teacherValidatorService.validateTeacherDTO(requestTeacherDTO);
+        if (validateEmail.isPresent()) {
+            throw new TeacherCreateException("Email already used. Try again with another email!");
+        }
 
         Teacher teacherResponseEntity = teacherRepository.save(teacherEntitySave);
         log.info("Teacher with id {} was created", teacherResponseEntity.getId());
@@ -39,9 +43,13 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<ResponseTeacherDTO> getAllTeachers() {
-        return teacherRepository.findAll().stream()
-                .map(teacher -> objectMapper.convertValue(teacher, ResponseTeacherDTO.class))
-                .toList();
+        List<ResponseTeacherDTO> responseTeacherDTOList = new ArrayList<>();
+        List<Teacher> teachers = teacherRepository.findAll();
+        for (Teacher teacher : teachers) {
+            ResponseTeacherDTO responseTeacherDTO = objectMapper.convertValue(teacher, ResponseTeacherDTO.class);
+            responseTeacherDTOList.add(responseTeacherDTO);
+        }
+        return responseTeacherDTOList;
     }
 
     @Override
@@ -54,13 +62,4 @@ public class TeacherServiceImpl implements TeacherService {
     public void deleteTeacher(Long id) {
         teacherRepository.deleteById(id);
     }
-
-//    @Override
-//    public List<CourseDTO> getCoursesByTeacherId(Long id) {
-//        Teacher teacher = teacherRepositories.findById(id)
-//                .orElseThrow(() -> new TeacherCreateException("Teacher not found"));
-//        return teacher.getCourses().stream()
-//                .map(course -> objectMapper.convertValue(course, CourseDTO.class))
-//                .toList();
-//    }
 }

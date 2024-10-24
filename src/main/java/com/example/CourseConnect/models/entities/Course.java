@@ -1,7 +1,9 @@
 package com.example.CourseConnect.models.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -9,6 +11,8 @@ import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "courses")
 public class Course {
 
@@ -26,7 +30,6 @@ public class Course {
     @Column(name = "description")
     private String description;
 
-
     @Column(name = "course_schedule_time")
     private LocalDateTime courseScheduleTime;
 
@@ -37,10 +40,10 @@ public class Course {
     @Column(name = "course_room_size")
     private Integer courseRoomSize;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<StudentEnrollCourse> studentEnrollCourses;
+//    @ManyToMany(mappedBy = "course", cascade = CascadeType.ALL)
+//    private List<StudentEnrollCourse> studentEnrollCourses;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id", unique = true)
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 }

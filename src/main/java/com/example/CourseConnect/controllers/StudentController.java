@@ -21,7 +21,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseStudentDTO> createStudent(@Valid @RequestBody RequestStudentDTO requestStudentDTO) {
+    public ResponseEntity<ResponseStudentDTO> createStudent(@RequestBody @Valid RequestStudentDTO requestStudentDTO) {
         return ResponseEntity.ok(studentService.createStudent(requestStudentDTO));
     }
 
@@ -40,10 +40,4 @@ public class StudentController {
         studentService.deleteStudent(id);
         return ResponseEntity.ok("Student deleted");
     }
-
-//    @PostMapping("/{studentId}/enroll/{courseId}")
-//    public ResponseEntity<String> enrollInCourse(@PathVariable Long studentId, @PathVariable Long courseId) {
-//        studentService.enrollInCourse(studentId, courseId);
-//        return ResponseEntity.ok("Student enrolled in course successfully");
-//    }
 }
