@@ -1,11 +1,16 @@
 package com.example.CourseConnect.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,6 +32,7 @@ public class Student {
     @Column(name = "email", unique = true)
     private String email;
 
-//    @ManyToMany (mappedBy = "student", cascade = CascadeType.ALL)
-//    private List<StudentEnrollCourse> studentEnrollCourses;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
+    private List<StudentEnrollCourse> studentEnrollCourses;
 }

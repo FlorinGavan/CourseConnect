@@ -1,6 +1,7 @@
 package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.exceptions.TeacherCreateException;
+import com.example.CourseConnect.exceptions.TeacherNotFoundException;
 import com.example.CourseConnect.models.dtos.RequestTeacherDTO;
 import com.example.CourseConnect.models.dtos.ResponseTeacherDTO;
 import com.example.CourseConnect.models.entities.Teacher;
@@ -60,6 +61,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void deleteTeacher(Long id) {
+        teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException("Teacher with id " + id + " not found "));
         teacherRepository.deleteById(id);
+        log.info("Teacher with id {} was deleted", id);
     }
 }

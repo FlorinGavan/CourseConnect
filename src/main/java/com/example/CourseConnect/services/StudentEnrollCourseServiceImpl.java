@@ -2,6 +2,7 @@ package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.exceptions.CourseNotFoundException;
 import com.example.CourseConnect.exceptions.CourseRoomSizeException;
+import com.example.CourseConnect.exceptions.StudentCreateException;
 import com.example.CourseConnect.exceptions.StudentNotFoundException;
 import com.example.CourseConnect.models.dtos.StudentEnrollCourseDTO;
 import com.example.CourseConnect.models.entities.Course;
@@ -13,13 +14,15 @@ import com.example.CourseConnect.repositories.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class StudentEnrollCourseServiceImpl implements StudentEnrollCourseService {
 
     private final StudentEnrollCourseRepository studentEnrollCourseRepository;
-    private  final StudentRepository studentRepository;
-    private  final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
 
     public StudentEnrollCourseServiceImpl(StudentEnrollCourseRepository studentEnrollCourseRepository, StudentRepository studentRepository, CourseRepository courseRepository) {
         this.studentEnrollCourseRepository = studentEnrollCourseRepository;
@@ -32,19 +35,28 @@ public class StudentEnrollCourseServiceImpl implements StudentEnrollCourseServic
         Course course = courseRepository.findById(studentEnrollCourseDTO.getCourseId())
                 .orElseThrow(() -> new CourseNotFoundException("Course not found"));
 
-        if (course.getCourseRoomSize() <= 0){
-            throw new CourseRoomSizeException("Course room is full !");
+        if (course.getCourseRoomSize() <= 0) {
+            throw new CourseRoomSizeException("Course room is full!");
         }
+
         Student student = studentRepository.findById(studentEnrollCourseDTO.getStudentId())
-                .orElseThrow( () -> new StudentNotFoundException("Student not found"));
+                .orElseThrow(() -> new StudentNotFoundException("Student not found"));
+
+        Optional<StudentEnrollCourse> existingEnrollment = studentEnrollCourseRepository
+                .findByStudentIdAndCourseId(student.getId(), course.getId());
+
+        if (existingEnrollment.isPresent()) {
+            throw new StudentCreateException("Student is already enrolled in this course.");
+        }
+
         StudentEnrollCourse studentEnrollCourse = new StudentEnrollCourse();
         studentEnrollCourse.setCourse(course);
         studentEnrollCourse.setStudent(student);
 
-        course.setCourseRoomSize(course.getCourseRoomSize() -1);
+        course.setCourseRoomSize(course.getCourseRoomSize() - 1);
         courseRepository.save(course);
 
         studentEnrollCourseRepository.save(studentEnrollCourse);
-        log.info("Student has enrolled successful on this course");
+        log.info("Student has successfully enrolled in this course.");
     }
 }

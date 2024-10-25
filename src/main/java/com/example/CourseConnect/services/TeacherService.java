@@ -14,5 +14,4 @@ public interface TeacherService {
     ResponseTeacherDTO getTeacherById(Long id);
 
     List<ResponseTeacherDTO> getAllTeachers();
-//    List<CourseDTO> getCoursesByTeacherId(Long id);
 }

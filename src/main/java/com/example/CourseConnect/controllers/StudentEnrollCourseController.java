@@ -18,8 +18,8 @@ public class StudentEnrollCourseController {
         this.studentEnrollCourseService = studentEnrollCourseService;
     }
 
-    @PostMapping
-    public ResponseEntity<String> enrollCourse(@RequestBody StudentEnrollCourseDTO studentEnrollCourseDTO) {
+  @PostMapping
+    public ResponseEntity<String> studentEnrollCourse(@RequestBody StudentEnrollCourseDTO studentEnrollCourseDTO) {
         studentEnrollCourseService.enrollCourse(studentEnrollCourseDTO);
         return ResponseEntity.ok("Student enrolled successfully");
     }

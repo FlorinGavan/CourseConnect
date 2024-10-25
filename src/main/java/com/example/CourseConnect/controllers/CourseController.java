@@ -1,7 +1,6 @@
 package com.example.CourseConnect.controllers;
 
-import com.example.CourseConnect.exceptions.CourseNotFoundException;
-import com.example.CourseConnect.exceptions.UnauthorizedException;
+import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.RequestCourseDTO;
 import com.example.CourseConnect.models.dtos.ResponseCourseDTO;
 import com.example.CourseConnect.models.entities.Category;
@@ -40,10 +39,15 @@ public class CourseController {
             @RequestParam(value = "courseDay", required = false) DayOfWeek courseDay) {
         return ResponseEntity.ok(courseService.filterCourses(name, category, courseDay));
     }
+        @GetMapping("/students/{studentId}")
+    public ResponseEntity<List<ResponseCourseDTO>> getCoursesByStudentId(@PathVariable Long studentId) {
+        List<ResponseCourseDTO> courses = courseService.getCoursesByStudentId(studentId);
+        return ResponseEntity.ok(courses);
+    }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> updateCourse(@PathVariable Long id, @Valid @RequestBody RequestCourseDTO requestCourseDTO) {
-        courseService.updateCourse(id, requestCourseDTO);
+    public ResponseEntity<String> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO) {
+        courseService.updateCourse(id, courseDTO);
         return ResponseEntity.ok("Course edited");
     }
 

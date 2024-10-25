@@ -1,5 +1,6 @@
 package com.example.CourseConnect.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,8 +41,9 @@ public class Course {
     @Column(name = "course_room_size")
     private Integer courseRoomSize;
 
-//    @ManyToMany(mappedBy = "course", cascade = CascadeType.ALL)
-//    private List<StudentEnrollCourse> studentEnrollCourses;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<StudentEnrollCourse> studentEnrollCourses;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")

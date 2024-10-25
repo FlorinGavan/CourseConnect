@@ -49,8 +49,8 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(CourseRoomSizeException.class)
-    public  ResponseEntity<String>courseRoomSizeException ( CourseRoomSizeException courseRoomSizeException){
-        return  new ResponseEntity<>(objectToString(Map.of("message", courseRoomSizeException.getMessage())), CONFLICT);
+    public ResponseEntity<String> courseRoomSizeException(CourseRoomSizeException courseRoomSizeException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", courseRoomSizeException.getMessage())), CONFLICT);
     }
 
     @ExceptionHandler(TeacherCreateException.class)
@@ -62,11 +62,18 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> teacherNotFoundException(TeacherNotFoundException teacherNotFoundException) {
         return new ResponseEntity<>(objectToString(Map.of("message", teacherNotFoundException.getMessage())), NOT_FOUND);
     }
+
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<String> unauthorizedException(UnauthorizedException unauthorizedException) {
         return new ResponseEntity<>(objectToString(Map.of("message", unauthorizedException.getMessage())), UNAUTHORIZED);
     }
-       @Override
+
+    @ExceptionHandler(NoCoursesEnrolledException.class)
+    public ResponseEntity<String> noCoursesEnrollException(NoCoursesEnrolledException noCoursesEnrolledException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", noCoursesEnrolledException.getMessage())), NOT_FOUND);
+    }
+
+    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
