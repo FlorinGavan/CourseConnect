@@ -23,5 +23,3 @@ CourseConnect is a Course Management System designed to facilitate the creation 
 ### Optional Extension: Enrollment Records
 - An entity for Enrollment Records can be added to track when students enroll in and withdraw from courses, creating relationships between Course and Student entities.
 
-
-![Screenshot 2024-10-26 195413.png](..%2F..%2FUsers%2FFlorinGavan%2FPictures%2FScreenshots%2FScreenshot%202024-10-26%20195413.png)

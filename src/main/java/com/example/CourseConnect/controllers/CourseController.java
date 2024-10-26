@@ -39,7 +39,8 @@ public class CourseController {
             @RequestParam(value = "courseDay", required = false) DayOfWeek courseDay) {
         return ResponseEntity.ok(courseService.filterCourses(name, category, courseDay));
     }
-        @GetMapping("/students/{studentId}")
+
+    @GetMapping("/students/{studentId}")
     public ResponseEntity<List<ResponseCourseDTO>> getCoursesByStudentId(@PathVariable Long studentId) {
         List<ResponseCourseDTO> courses = courseService.getCoursesByStudentId(studentId);
         return ResponseEntity.ok(courses);

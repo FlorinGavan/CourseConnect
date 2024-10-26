@@ -41,10 +41,4 @@ public class TeacherController {
         teacherService.deleteTeacher(id);
         return ResponseEntity.ok("Teacher deleted");
     }
-
-//    @GetMapping("/{id}/courses")
-//    public ResponseEntity<List<CourseDTO>> getCoursesByTeacherId(@PathVariable Long id) {
-//        List<CourseDTO> courses = teacherService.getCoursesByTeacherId(id);
-//        return ResponseEntity.ok(courses);
-//    }
 }
