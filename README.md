@@ -9,7 +9,6 @@ CourseConnect is a Course Management System designed to facilitate the creation 
 - **View Courses**: Teachers can view all available courses and their details.
 - **Update Courses**: Teachers can update course information (e.g., adding prerequisites or changing schedules).
 - **Delete Courses**: Teachers can delete a course if there are no enrolled students.
-
 ### Student Management (CRUD)
 - **Register Students**: Students can enroll in any course without any restrictions after they create an account.
 - **View Students**: Students can view a list of all courses.
@@ -23,3 +22,6 @@ CourseConnect is a Course Management System designed to facilitate the creation 
 
 ### Optional Extension: Enrollment Records
 - An entity for Enrollment Records can be added to track when students enroll in and withdraw from courses, creating relationships between Course and Student entities.
+
+
+![Screenshot 2024-10-26 195413.png](..%2F..%2FUsers%2FFlorinGavan%2FPictures%2FScreenshots%2FScreenshot%202024-10-26%20195413.png)
