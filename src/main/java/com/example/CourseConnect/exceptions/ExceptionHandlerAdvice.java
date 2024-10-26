@@ -81,7 +81,6 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-
         return new ResponseEntity<>(objectToString(errors), BAD_REQUEST);
     }
 

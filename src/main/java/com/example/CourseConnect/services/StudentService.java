@@ -6,6 +6,7 @@ import com.example.CourseConnect.models.dtos.ResponseStudentDTO;
 import java.util.List;
 
 public interface StudentService {
+
     ResponseStudentDTO createStudent(RequestStudentDTO requestStudentDTO);
 
     ResponseStudentDTO getStudentById(Long id);

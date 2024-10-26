@@ -12,12 +12,14 @@ public class CourseSpecification {
         return (course, query, criteriaBuilder) -> name == null ? null :
                 criteriaBuilder.like(criteriaBuilder.lower(course.get("name")), "%" + name.toLowerCase() + "%");
     }
-    public static Specification<Course> categoryContains(Category category){
-        return (course , query, criteriaBuilder) -> category == null ? null :
+
+    public static Specification<Course> categoryContains(Category category) {
+        return (course, query, criteriaBuilder) -> category == null ? null :
                 criteriaBuilder.like(criteriaBuilder.upper(course.get("category")), "%" + category + "%");
     }
-    public   static  Specification<Course> dayOfWeekContains(DayOfWeek courseDay) {
+
+    public static Specification<Course> dayOfWeekContains(DayOfWeek courseDay) {
         return (course, query, criteriaBuilder) -> courseDay == null ? null :
-                criteriaBuilder.like(criteriaBuilder.upper(course.get("courseDay")), "%"+ courseDay + "%" );
+                criteriaBuilder.like(criteriaBuilder.upper(course.get("courseDay")), "%" + courseDay + "%");
     }
 }

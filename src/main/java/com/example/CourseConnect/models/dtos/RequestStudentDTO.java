@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 public class RequestStudentDTO {
 
-     @NotBlank(message = "First name should not be empty")
-    @Pattern(regexp = "[a-zA-Z]+" , message = "First name cannot contain numbers or symbols")
+    @NotBlank(message = "First name should not be empty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "First name cannot contain numbers or symbols")
     private String firstName;
 
     @NotBlank(message = "Last name should not be empty")
-    @Pattern(regexp = "[a-zA-Z]+" , message = "Last name cannot contain numbers or symbols")
+    @Pattern(regexp = "[a-zA-Z]+", message = "Last name cannot contain numbers or symbols")
     private String lastName;
 
     @NotBlank(message = "You must add an email")

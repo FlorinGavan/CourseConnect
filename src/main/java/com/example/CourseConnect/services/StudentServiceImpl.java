@@ -2,12 +2,9 @@ package com.example.CourseConnect.services;
 
 import com.example.CourseConnect.exceptions.StudentCreateException;
 import com.example.CourseConnect.exceptions.StudentNotFoundException;
-import com.example.CourseConnect.exceptions.TeacherCreateException;
-import com.example.CourseConnect.models.dtos.*;
-import com.example.CourseConnect.models.entities.Course;
+import com.example.CourseConnect.models.dtos.RequestStudentDTO;
+import com.example.CourseConnect.models.dtos.ResponseStudentDTO;
 import com.example.CourseConnect.models.entities.Student;
-import com.example.CourseConnect.models.entities.StudentEnrollCourse;
-import com.example.CourseConnect.models.entities.Teacher;
 import com.example.CourseConnect.repositories.CourseRepository;
 import com.example.CourseConnect.repositories.StudentEnrollCourseRepository;
 import com.example.CourseConnect.repositories.StudentRepository;
@@ -27,7 +24,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final ObjectMapper objectMapper;
-    private final  StudentEnrollCourseRepository studentEnrollCourseRepository;
+    private final StudentEnrollCourseRepository studentEnrollCourseRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 

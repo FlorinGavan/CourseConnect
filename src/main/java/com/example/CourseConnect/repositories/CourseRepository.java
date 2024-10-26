@@ -10,8 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long>, JpaSpecificationExecutor<Course> {
+
     Optional<Course> findCourseByName(@NotNull String name);
 
     Optional<Course> findCourseById(@NotNull Long id);
-
 }

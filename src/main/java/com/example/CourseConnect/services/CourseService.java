@@ -16,7 +16,8 @@ public interface CourseService {
 
     List<ResponseCourseDTO> getAllCourses();
 
-    List<ResponseCourseDTO>filterCourses(String name, Category category, DayOfWeek courseDay);
+    List<ResponseCourseDTO> filterCourses(String name, Category category, DayOfWeek courseDay);
+
     List<ResponseCourseDTO> getCoursesByStudentId(Long studentId);
 
     void deleteCourse(Long id, Long teacherId);

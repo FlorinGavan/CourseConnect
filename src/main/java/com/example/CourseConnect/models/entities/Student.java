@@ -32,7 +32,7 @@ public class Student {
     @Column(name = "email", unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<StudentEnrollCourse> studentEnrollCourses;
 }

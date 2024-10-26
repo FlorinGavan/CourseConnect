@@ -4,7 +4,10 @@ import com.example.CourseConnect.exceptions.*;
 import com.example.CourseConnect.models.dtos.CourseDTO;
 import com.example.CourseConnect.models.dtos.RequestCourseDTO;
 import com.example.CourseConnect.models.dtos.ResponseCourseDTO;
-import com.example.CourseConnect.models.entities.*;
+import com.example.CourseConnect.models.entities.Category;
+import com.example.CourseConnect.models.entities.Course;
+import com.example.CourseConnect.models.entities.StudentEnrollCourse;
+import com.example.CourseConnect.models.entities.Teacher;
 import com.example.CourseConnect.repositories.CourseRepository;
 import com.example.CourseConnect.repositories.StudentEnrollCourseRepository;
 import com.example.CourseConnect.repositories.StudentRepository;
@@ -74,7 +77,6 @@ public class CourseServiceImpl implements CourseService {
         return objectMapper.convertValue(updateValue, ResponseCourseDTO.class);
     }
 
-
     @Override
     public List<ResponseCourseDTO> getAllCourses() {
         return courseRepository.findAll().stream()
@@ -114,7 +116,6 @@ public class CourseServiceImpl implements CourseService {
                 })
                 .toList();
     }
-
 
     @Override
     public List<ResponseCourseDTO> filterCourses(String name, Category category, DayOfWeek courseDay) {

@@ -20,6 +20,6 @@ public class StudentEnrollCourse {
 
     @ManyToOne
     @JoinColumn(name = "student_id")
-     @JsonIgnore
+    @JsonIgnore
     private Student student;
 }
