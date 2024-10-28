@@ -16,4 +16,5 @@ public class CourseDTO {
     private LocalDateTime courseScheduleTime;
     private DayOfWeek courseDay;
     private Integer courseRoomSize;
+    private Long teacherId;
 }

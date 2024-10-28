@@ -73,6 +73,11 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(objectToString(Map.of("message", noCoursesEnrolledException.getMessage())), NOT_FOUND);
     }
 
+    @ExceptionHandler(UnmodifiableFieldException.class)
+    public ResponseEntity<String> unmodifiableFieldException(UnmodifiableFieldException unmodifiableFieldException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", unmodifiableFieldException.getMessage())), FORBIDDEN);
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         Map<String, String> errors = new HashMap<>();

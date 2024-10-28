@@ -80,15 +80,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<ResponseCourseDTO> getAllCourses() {
         return courseRepository.findAll().stream()
-                .map(course -> {
-                    ResponseCourseDTO dto = objectMapper.convertValue(course, ResponseCourseDTO.class);
-
-                    if (course.getTeacher() != null) {
-                        Optional<Teacher> teacher = teacherRepository.findTeacherById(course.getTeacher().getId());
-                        teacher.ifPresent(t -> dto.setTeacherId(t.getId()));
-                    }
-                    return dto;
-                })
+                .map(this::mapToResponseCourseDTO)
                 .toList();
     }
 
@@ -128,7 +120,7 @@ public class CourseServiceImpl implements CourseService {
         log.info("{} courses found", courses.size());
 
         return courses.stream()
-                .map(course -> objectMapper.convertValue(course, ResponseCourseDTO.class))
+                .map(this::mapToResponseCourseDTO)
                 .toList();
     }
 
@@ -149,11 +141,25 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private void updateCourseFields(CourseDTO courseDTO, Course existingCourse) {
+        if (courseDTO.getTeacherId() != null) {
+            throw new UnmodifiableFieldException("Cannot modify teacherId field");
+        }
+
         existingCourse.setName(courseDTO.getName() == null ? existingCourse.getName() : courseDTO.getName());
         existingCourse.setCategory(courseDTO.getCategory() == null ? existingCourse.getCategory() : courseDTO.getCategory());
         existingCourse.setDescription(courseDTO.getDescription() == null ? existingCourse.getDescription() : courseDTO.getDescription());
         existingCourse.setCourseScheduleTime(courseDTO.getCourseScheduleTime() == null ? existingCourse.getCourseScheduleTime() : courseDTO.getCourseScheduleTime());
         existingCourse.setCourseDay(courseDTO.getCourseDay() == null ? existingCourse.getCourseDay() : courseDTO.getCourseDay());
         existingCourse.setCourseRoomSize(courseDTO.getCourseRoomSize() == null ? existingCourse.getCourseRoomSize() : courseDTO.getCourseRoomSize());
+    }
+
+    private ResponseCourseDTO mapToResponseCourseDTO(Course course) {
+        ResponseCourseDTO dto = objectMapper.convertValue(course, ResponseCourseDTO.class);
+
+        if (course.getTeacher() != null) {
+            Optional<Teacher> teacher = teacherRepository.findTeacherById(course.getTeacher().getId());
+            teacher.ifPresent(t -> dto.setTeacherId(t.getId()));
+        }
+        return dto;
     }
 }
